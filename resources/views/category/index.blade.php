@@ -24,13 +24,13 @@
                         <td>{{ $category->model }}</td>
                         <td>{{ $category->year }}</td>
                         <td>
-                            {{-- <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                            <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="d-inline"
+                            <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
                                 @csrf
-                                @method('DELETE')
+                                @method('delete')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form> --}}
+                            </form>
                         </td>
                     </tr>
                 @empty

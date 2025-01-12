@@ -58,24 +58,47 @@ class CategoryController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Category $category)
+    public function edit($id)
     {
-        //
+        $category = Category::findOrFail($id);
+        return view('category.edit', [
+            'category' => $category
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $categories = Category::findOrFail($id);
+            $categories->brand = $request->brand;
+            $categories->model = $request->model;
+            $categories->year = $request->year;
+            $categories->save();
+            DB::commit();
+            return redirect()->route('category.index')->with('success', 'Category Updated Successfully.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error updating category.', $th);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function destroy(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            Category::destroy($request->id);
+            DB::commit();
+            return redirect()->route('category.index')->with('success', 'Category Deleted Successfully.');
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error deleting category.', $e);
+        }
     }
 }

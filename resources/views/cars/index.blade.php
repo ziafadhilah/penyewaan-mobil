@@ -70,14 +70,14 @@
                             @endif
                         </td>
                         <td>
-                            {{-- <a href="{{ route('cars.show', $car->id) }}" class="btn btn-info btn-sm">Detail</a>
+                            {{-- <a href="{{ route('cars.show', $car->id) }}" class="btn btn-info btn-sm">Detail</a> --}}
                             <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary btn-sm">Edit</a>
                             <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Apakah Anda yakin ingin menghapus mobil ini?')">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form> --}}
+                            </form>
                         </td>
                     </tr>
                 @empty

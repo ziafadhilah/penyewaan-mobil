@@ -80,24 +80,52 @@ class CarController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Car $car)
+    public function edit($id)
     {
-        //
+        $categories = Category::all();
+        $car = Car::with('category')->findOrFail($id);
+        return view('cars.edit', [
+            'car' => $car,
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Car $car)
+    public function update(Request $request, $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $car = Car::findOrFail($id);
+            $car->name = $request->name;
+            $car->category_id = $request->category_id;
+            $car->licence_plate = $request->licence_plate;
+            $car->status = $request->status;
+            $car->price_per_day = $request->price_per_day;
+            $car->save();
+            DB::commit();
+            return redirect()->route('cars.index')->with('success', 'Car updated successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error updating car', $th);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Car $car)
+    public function destroy(Request $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $car = Car::findOrFail($request->id);
+            $car->delete();
+            DB::commit();
+            return redirect()->route('cars.index')->with('success', 'Car deleted successfully');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', 'Error deleting car', $th);
+        }
     }
 }
