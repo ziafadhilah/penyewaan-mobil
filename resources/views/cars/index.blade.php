@@ -27,6 +27,12 @@
                         <option value="rented" {{ request('status') == 'rented' ? 'selected' : '' }}>Disewa</option>
                         <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Perawatan
                         </option>
+                        <option value="unavailable" {{ request('status') == 'unavailable' ? 'selected' : '' }}>Tidak
+                            Tersedia
+                        </option>
+                        <option value="need_confirmation" {{ request('status') == 'need_confirmation' ? 'selected' : '' }}>
+                            Butuh Konfirmasi
+                        </option>
                     </select>
                 </div>
                 <div class="col-md-4 mt-2">
@@ -56,7 +62,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $car->name }}</td>
-                        <td>{{ $car->category->brand }}</td>
+                        <td>{{ $car->category->brand ?? '-' }}</td>
                         <td>{{ $car->licence_plate }}</td>
                         <td>{{ $car->category->model ?? '-' }}</td>
                         <td>Rp {{ number_format($car->price_per_day, 0, ',', '.') }}</td>
@@ -65,8 +71,12 @@
                                 <span class="badge bg-success">Tersedia</span>
                             @elseif($car->status === 'rented')
                                 <span class="badge bg-warning">Disewa</span>
-                            @else
+                            @elseif($car->status === 'maintenance')
                                 <span class="badge bg-danger">Perawatan</span>
+                            @elseif($car->status === 'unavailable')
+                                <span class="badge bg-secondary">Tidak Tersedia</span>
+                            @elseif($car->status === 'need_confirmation')
+                                <span class="badge bg-danger">Butuh Konfirmasi</span>
                             @endif
                         </td>
                         <td>
@@ -78,6 +88,16 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
                             </form>
+                            @if ($car->status === 'need_confirmation')
+                                <form action="{{ route('cars.confirm', $car->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('patch')
+                                    <button type="submit" class="btn btn-success btn-sm"
+                                        onclick="return confirm('Apakah Anda yakin ingin mengonfirmasi mobil ini?')">
+                                        Konfirmasi
+                                    </button>
+                                </form>
+                            @endif
                         </td>
                     </tr>
                 @empty

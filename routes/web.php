@@ -28,6 +28,7 @@ Route::prefix('/cars')->name('cars.')->group(function () {
     Route::get('/edit/{id}', [CarController::class, 'edit'])->name('edit');
     Route::put('/{id}', [CarController::class, 'update'])->name('update');
     Route::delete('/{id}', [CarController::class, 'destroy'])->name('destroy');
+    Route::patch('/confirm/{id}', [CarController::class, 'confirm'])->name('confirm');
 });
 
 // Returned
