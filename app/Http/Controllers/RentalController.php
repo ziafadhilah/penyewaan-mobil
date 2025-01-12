@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use App\Models\Rental;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,10 @@ class RentalController extends Controller
      */
     public function index()
     {
-        //
+        $rentals = Rental::all();
+        return view('rent.index', [
+            'cars' => $rentals
+        ]);
     }
 
     /**
@@ -20,7 +24,10 @@ class RentalController extends Controller
      */
     public function create()
     {
-        //
+        $cars = Car::all();
+        return view('rent.create', [
+            'cars' => $cars
+        ]);
     }
 
     /**

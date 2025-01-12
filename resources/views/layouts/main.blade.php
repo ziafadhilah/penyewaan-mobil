@@ -59,14 +59,13 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="{{ url('thumbnail') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-images"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Thumbnail</span>
+                            <a href="{{ url('rent') }}" class="nav-link align-middle px-0">
+                                <i class="fs-4 fas fa-images"></i> <span class="ms-1 d-none d-sm-inline">Rent</span>
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="{{ url('price') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-dollar"></i> <span class="ms-1 d-none d-sm-inline">Price</span>
+                            <a href="{{ url('returned') }}" class="nav-link align-middle px-0">
+                                <i class="fs-4 fas fa-dollar"></i> <span class="ms-1 d-none d-sm-inline">Return</span>
                             </a>
                         </li>
                         {{-- <li>
