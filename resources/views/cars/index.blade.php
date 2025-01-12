@@ -2,7 +2,7 @@
 @section('title', 'Daftar Mobil')
 @section('content')
     <div class="container mt-4">
-        <h1 class="mb-4">Daftar Mobil</h1>
+        <h1 class="mb-4">Daftar Mobil awokkwaawkwakwkwwa</h1>
         <form method="GET" action="{{ route('cars.index') }}" class="mb-4">
             <div class="row g-3">
                 <div class="col-md-4">
