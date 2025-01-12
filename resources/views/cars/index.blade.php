@@ -97,6 +97,14 @@
                                         Konfirmasi
                                     </button>
                                 </form>
+                                <form action="{{ route('cars.reject', $car->id) }}" method="POST" class="d-inline">
+                                    @csrf
+                                    @method('patch')
+                                    <button type="submit" class="btn btn-warning btn-sm"
+                                        onclick="return confirm('Apakah Anda yakin ingin menolak mobil ini?')">
+                                        Tolak
+                                    </button>
+                                </form>
                             @endif
                         </td>
                     </tr>

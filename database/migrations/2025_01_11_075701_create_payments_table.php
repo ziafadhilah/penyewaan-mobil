@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('rental_id');
             $table->integer('amount_paid');
             $table->string('payment_method');
-            $table->timestamp('paid_at');
+            $table->date('paid_at');
             $table->timestamps();
         });
     }

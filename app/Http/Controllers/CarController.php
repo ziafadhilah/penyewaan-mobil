@@ -8,8 +8,6 @@ use App\Models\Rental;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-use function Laravel\Prompts\error;
-
 class CarController extends Controller
 {
     /**
@@ -102,12 +100,20 @@ class CarController extends Controller
         DB::beginTransaction();
         try {
             $car = Car::findOrFail($id);
+            $oldStatus = $car->status;
             $car->name = $request->name;
             $car->category_id = $request->category_id;
             $car->licence_plate = $request->licence_plate;
             $car->status = $request->status;
             $car->price_per_day = $request->price_per_day;
             $car->save();
+            if ($oldStatus === 'rented' && $car->status === 'need_confirmation') {
+                $rental = Rental::where('car_id', $id)->where('status', 'confirmed')->first();
+                if ($rental) {
+                    $rental->status = 'pending';
+                    $rental->save();
+                }
+            }
             DB::commit();
             return redirect()->route('cars.index')->with('success', 'Car updated successfully');
         } catch (\Throwable $th) {
@@ -143,7 +149,7 @@ class CarController extends Controller
                 return redirect()->route('cars.index')->with('error', 'Status mobil tidak valid untuk konfirmasi.');
             }
 
-            // Ubah status mobil menjadi 'available'
+            // Ubah status mobil menjadi 'rented'
             $car->status = 'rented';
             $car->save();
 
@@ -157,6 +163,32 @@ class CarController extends Controller
 
             DB::commit();
             return redirect()->route('cars.index')->with('success', 'Status mobil dan rental berhasil dikonfirmasi.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('cars.index')->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
+        }
+    }
+
+    public function reject($id)
+    {
+        DB::beginTransaction();
+        try {
+            $car = Car::findOrFail($id);
+            if ($car->status !== 'need_confirmation') {
+                return redirect()->route('cars.index')->with('error', 'Status mobil tidak valid untuk konfirmasi.');
+            }
+
+            $car->status = 'available';
+            $car->save();
+
+            $rental = Rental::where('car_id', $id)->where('status', 'pending')->first();
+
+            if ($rental) {
+                $rental->status = 'rejected';
+                $rental->save();
+            }
+            DB::commit();
+            return redirect()->route('cars.index')->with('success', 'Status mobil dan rental berhasil ditolak.');
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->route('cars.index')->with('error', 'Terjadi kesalahan: ' . $th->getMessage());

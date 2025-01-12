@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('car_id');
-            $table->timestamp('rented_at');
-            $table->timestamp('due_date');
-            $table->enum('status', ['pending', 'completed', 'overtime', 'confirmed'])->default('pending');
+            $table->date('rented_at');
+            $table->date('due_date');
+            $table->enum('status', ['pending', 'completed', 'overtime', 'confirmed', 'rejected'])->default('pending');
             $table->integer('total_price');
             $table->timestamps();
         });

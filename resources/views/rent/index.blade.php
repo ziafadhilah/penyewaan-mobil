@@ -25,7 +25,19 @@
                         <td>{{ $car->total_price }}</td>
                         <td>{{ $car->rented_at }}</td>
                         <td>{{ $car->due_date }}</td>
-                        <td>{{ $car->status }}</td>
+                        <td>
+                            @if ($car->status === 'confirmed')
+                                <span class="badge bg-success">Dikonfirmasi</span>
+                            @elseif($car->status === 'pending')
+                                <span class="badge bg-warning">Menunggu Persetujuan</span>
+                            @elseif($car->status === 'rejected')
+                                <span class="badge bg-danger">Ditolak</span>
+                            @elseif($car->status === 'overtime')
+                                <span class="badge bg-danger">Lewat Batas Waktu</span>
+                            @elseif($car->status === 'completed')
+                                <span class="badge bg-success">Selesai</span>
+                            @endif
+                        </td>
                         <td>
                             {{-- <a href="{{ route('rent.show', $car->id) }}" class="btn btn-info">Detail</a> --}}
                             <a href="{{ route('rent.edit', $car->id) }}" class="btn btn-warning">Edit</a>
