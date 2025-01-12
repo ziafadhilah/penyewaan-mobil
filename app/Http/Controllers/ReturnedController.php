@@ -12,7 +12,10 @@ class ReturnedController extends Controller
      */
     public function index()
     {
-        //
+        $returned = Returned::with('rental')->get();
+        return view('returned.index', [
+            'returned' => $returned
+        ]);
     }
 
     /**
