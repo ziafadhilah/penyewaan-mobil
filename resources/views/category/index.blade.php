@@ -24,6 +24,7 @@
                         <td>{{ $category->model }}</td>
                         <td>{{ $category->year }}</td>
                         <td>
+                            <a href="{{ route('category.show', $category->id) }}" class="btn btn-info btn-sm">Detail</a>
                             <a href="{{ route('category.edit', $category->id) }}" class="btn btn-warning btn-sm">Edit</a>
                             <form action="{{ route('category.destroy', $category->id) }}" method="POST" class="d-inline"
                                 onsubmit="return confirm('Yakin ingin menghapus kategori ini?')">
