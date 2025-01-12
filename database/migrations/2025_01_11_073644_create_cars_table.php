@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('category_id');
             $table->string('name');
             $table->string('licence_plate')->unique();
-            $table->enum('status', ['available', 'rented', 'maintenance', 'unavailable'])->default('unavailable');
+            $table->enum('status', ['available', 'rented', 'maintenance', 'unavailable', 'need_confirmation'])->default('unavailable');
             $table->integer('price_per_day');
             $table->timestamps();
         });

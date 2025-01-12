@@ -19,7 +19,7 @@
                     <option value="">Pilih Kategori</option>
                     @foreach ($categories as $category)
                         <option value="{{ $category->id }}" {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                            {{ $category->brand }}
+                            {{ $category->brand . ' - ' . $category->model }}
                         </option>
                     @endforeach
                 </select>
@@ -54,6 +54,9 @@
                     <option value="maintenance" {{ old('status') == 'maintenance' ? 'selected' : '' }}>Dalam Pemeliharaan
                     </option>
                     <option value="unavailable" {{ old('status') == 'unavailable' ? 'selected' : '' }}>Tidak Tersedia
+                    </option>
+                    <option value="need_confirmation" {{ old('status') == 'need_confirmation' ? 'selected' : '' }}>Butuh
+                        Konfirmasi
                     </option>
                 </select>
                 @error('status')

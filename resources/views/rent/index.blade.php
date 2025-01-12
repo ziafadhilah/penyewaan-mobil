@@ -1,9 +1,10 @@
 @extends('layouts.main')
+@section('title', 'Rental Mobil')
 
 @section('content')
     <div class="container">
         <h1>Rental Mobil</h1>
-        <a href="{{ route('rent.create') }}" class="btn btn-primary mb-3">Tambah Data Mobil</a>
+        <a href="{{ route('rent.create') }}" class="btn btn-primary mb-3">Rental Mobil</a>
         <table class="table">
             <thead>
                 <tr>
@@ -17,7 +18,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($cars as $car)
+                @forelse ($cars as $car)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $car->car->name }}</td>
@@ -35,7 +36,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="7" class="text-center">Tidak ada mobil yang di sewa.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

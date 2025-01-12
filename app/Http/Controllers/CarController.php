@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Car;
 use App\Models\Category;
+use App\Models\Rental;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -129,6 +130,36 @@ class CarController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', 'Error deleting car', $th);
+        }
+    }
+
+    public function confirm($id)
+    {
+        DB::beginTransaction();
+        try {
+            $car = Car::findOrFail($id);
+
+            if ($car->status !== 'need_confirmation') {
+                return redirect()->route('cars.index')->with('error', 'Status mobil tidak valid untuk konfirmasi.');
+            }
+
+            // Ubah status mobil menjadi 'available'
+            $car->status = 'rented';
+            $car->save();
+
+            // Perbarui status pada tabel rent yang terkait dengan mobil ini
+            $rental = Rental::where('car_id', $id)->where('status', 'pending')->first();
+
+            if ($rental) {
+                $rental->status = 'confirmed';
+                $rental->save();
+            }
+
+            DB::commit();
+            return redirect()->route('cars.index')->with('success', 'Status mobil dan rental berhasil dikonfirmasi.');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route('cars.index')->with('error', 'Terjadi kesalahan: ' . $th->getMessage());
         }
     }
 }

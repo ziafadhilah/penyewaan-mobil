@@ -60,6 +60,10 @@
                     <option value="unavailable" {{ old('status', $car->status) == 'unavailable' ? 'selected' : '' }}>Tidak
                         Tersedia
                     </option>
+                    <option value="need_confirmation"
+                        {{ old('status', $car->status) == 'need_confirmation' ? 'selected' : '' }}>Butuh
+                        Konfirmasi
+                    </option>
                 </select>
                 @error('status')
                     <small class="text-danger">{{ $message }}</small>
