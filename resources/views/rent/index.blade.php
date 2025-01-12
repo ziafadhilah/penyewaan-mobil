@@ -3,8 +3,7 @@
 
 @section('content')
     <div class="container">
-        <h1>Rental Mobil</h1>
-        <a href="{{ route('rent.create') }}" class="btn btn-primary mb-3">Rental Mobil</a>
+        <h1>Daftar Rental Mobil</h1>
         <table class="table">
             <thead>
                 <tr>
@@ -22,7 +21,7 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>{{ $car->car->name }}</td>
-                        <td>{{ $car->total_price }}</td>
+                        <td>Rp. {{ number_format($car->total_price, 0, ',', '.') }}</td>
                         <td>{{ $car->rented_at }}</td>
                         <td>{{ $car->due_date }}</td>
                         <td>

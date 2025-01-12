@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Car;
 use App\Models\Rental;
 use App\Models\Category;
+use App\Models\Returned;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +29,7 @@ class RentalController extends Controller
      */
     public function create()
     {
-        $cars = Car::all();
+        $cars = Car::where('status', 'available')->get();
         return view('rent.create', [
             'cars' => $cars
         ]);
@@ -42,17 +43,16 @@ class RentalController extends Controller
         DB::beginTransaction();
         try {
             $car = Car::findOrFail($request->car_id);
+            $car->status = 'need_confirmation';
+            $car->save();
+
             $pricePerDay = $car->price_per_day;
 
-            // Hitung jumlah hari rental
             $rentedAt = Carbon::parse($request->rented_at);
             $dueDate = Carbon::parse($request->due_date);
-            $rentalDays = $rentedAt->diffInDays($dueDate) + 1; // Tambahkan 1 hari untuk hari pertama
-
-            // Hitung total harga
+            $rentalDays = $rentedAt->diffInDays($dueDate) + 1;
             $totalPrice = $pricePerDay * $rentalDays;
 
-            // Simpan data rental ke database
             $rental = new Rental();
             $rental->user_id = '1';
             $rental->car_id = $request->car_id;
@@ -61,8 +61,16 @@ class RentalController extends Controller
             $rental->status = 'pending';
             $rental->total_price = $totalPrice;
             $rental->save();
-            $car->status = 'need_confirmation';
-            $car->save();
+
+            $returned = new Returned();
+            $returned->rental_id = $rental->id;
+            $returned->due_date = $rental->due_date;
+            $returned->returned_at = null;
+            $returned->late_fee = 0;
+            $returned->damage_fee = 0;
+            $returned->condition_notes = null;
+            $returned->save();
+
             DB::commit();
             return redirect()->route('rent.index')->with('success', 'Rental created successfully');
         } catch (\Throwable $th) {

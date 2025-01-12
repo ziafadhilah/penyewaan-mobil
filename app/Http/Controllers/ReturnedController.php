@@ -39,9 +39,17 @@ class ReturnedController extends Controller
      */
     public function show(Returned $returned)
     {
-        //
+        // Tampilkan informasi tentang objek Returned
+        return [
+            'id' => $returned->id,
+            'rental_id' => $returned->rental_id,
+            'returned_at' => $returned->returned_at,
+            'late_fee' => $returned->late_fee,
+            'damage_fee' => $returned->damage_fee,
+            'contidition_notes' => $returned->contidition_notes,
+            'status' => $returned->status,
+        ];
     }
-
     /**
      * Show the form for editing the specified resource.
      */

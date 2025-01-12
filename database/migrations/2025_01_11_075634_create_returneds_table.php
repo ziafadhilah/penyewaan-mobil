@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('returneds', function (Blueprint $table) {
             $table->id();
             $table->foreignId('rental_id');
-            $table->date('returned_at');
+            $table->date('due_date');
+            $table->date('returned_at')->nullable();
             $table->integer('late_fee');
             $table->integer('damage_fee');
             $table->string('condition_notes')->nullable();

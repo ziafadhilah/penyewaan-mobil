@@ -41,7 +41,7 @@
                 <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
                     <a href="{{ url('/') }}"
                         class="d-flex align-items-center pb-3 pt-3 mb-md-0 me-md-auto text-white text-decoration-none">
-                        <span class="fs-5 d-none d-sm-inline">TOKO-ZIA</span>
+                        <span class="fs-5 d-none d-sm-inline">Rental-Mobil</span>
                     </a>
                     <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
                         id="menu">
@@ -52,60 +52,53 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            <a href="{{ url('category') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-list"></i> <span class="ms-1 d-none d-sm-inline">Category</span>
-                            </a>
+                            @if (Auth::user()->role === 'admin')
+                                <a href="{{ url('category') }}" class="nav-link align-middle px-0">
+                                    <i class="fs-4 fas fa-list"></i> <span
+                                        class="ms-1 d-none d-sm-inline">Kategori</span>
+                                </a>
+                            @endif
                         </li>
                         <li class="nav-item mb-2">
                             <a href="{{ url('cars') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-car"></i> <span class="ms-1 d-none d-sm-inline">Cars</span>
+                                <i class="fs-4 fas fa-car"></i> <span class="ms-1 d-none d-sm-inline">Daftar
+                                    Mobil</span>
                             </a>
                         </li>
                         <li class="nav-item mb-2">
                             <a href="{{ url('rent') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-images"></i> <span class="ms-1 d-none d-sm-inline">Rent</span>
+                                <i class="fs-4 fas fa-play"></i> <span class="ms-1 d-none d-sm-inline">Rental</span>
                             </a>
                         </li>
                         <li class="nav-item mb-2">
                             <a href="{{ url('returned') }}" class="nav-link align-middle px-0">
-                                <i class="fs-4 fas fa-dollar"></i> <span class="ms-1 d-none d-sm-inline">Return</span>
+                                <i class="fs-4 fas fa-retweet"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Pengembalian</span>
                             </a>
                         </li>
-                        {{-- <li>
-                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle ">
-                                <i class="fs-4 bi-bootstrap"></i> <span
-                                    class="ms-1 d-none d-sm-inline">Bootstrap</span></a>
-                            <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 1</a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span
-                                            class="d-none d-sm-inline">Item</span> 2</a>
-                                </li>
-                            </ul>
-                        </li> --}}
                     </ul>
                     <hr>
-                    {{-- <div class="dropdown pb-4">
+                    <div class="dropdown pb-4">
                         <a href="#"
                             class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
                             id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="https://github.com/mdo.png" alt="hugenerd" width="30" height="30"
                                 class="rounded-circle">
-                            <span class="d-none d-sm-inline mx-1">loser</span>
+                            <span class="d-none d-sm-inline mx-1">Sign Out</span>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
-                            <li><a class="dropdown-item" href="#">New project...</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
                             <li>
-                                <hr class="dropdown-divider">
+                                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit" class="dropdown-item"
+                                        style="background: none; border: none;">
+                                        <i class="fas fa-power-off"></i> Sign out
+                                    </button>
+                                </form>
                             </li>
-                            <li><a class="dropdown-item" href="#">Sign out</a></li>
                         </ul>
-                    </div> --}}
+                    </div>
                 </div>
             </div>
             <div class="col py-5 px-5">

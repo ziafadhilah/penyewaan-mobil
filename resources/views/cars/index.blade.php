@@ -41,9 +41,14 @@
                 </div>
             </div>
         </form>
+
         <div class="mb-3">
-            <a href="{{ route('cars.create') }}" class="btn btn-success">Tambah Mobil</a>
+            @if (Auth::user()->role === 'admin')
+                <a href="{{ route('cars.create') }}" class="btn btn-success">Tambah Mobil</a>
+            @endif
+            <a href="{{ route('rent.create') }}" class="btn btn-primary">Rental Mobil</a>
         </div>
+
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -81,13 +86,15 @@
                         </td>
                         <td>
                             <a href="{{ route('cars.show', $car->id) }}" class="btn btn-info btn-sm">Detail</a>
-                            <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary btn-sm">Edit</a>
-                            <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline"
-                                onsubmit="return confirm('Apakah Anda yakin ingin menghapus mobil ini?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
-                            </form>
+                            @if (Auth::user()->role === 'admin')
+                                <a href="{{ route('cars.edit', $car->id) }}" class="btn btn-primary btn-sm">Edit</a>
+                                <form action="{{ route('cars.destroy', $car->id) }}" method="POST" class="d-inline"
+                                    onsubmit="return confirm('Apakah Anda yakin ingin menghapus mobil ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                </form>
+                            @endif
                             @if ($car->status === 'need_confirmation')
                                 <form action="{{ route('cars.confirm', $car->id) }}" method="POST" class="d-inline">
                                     @csrf
