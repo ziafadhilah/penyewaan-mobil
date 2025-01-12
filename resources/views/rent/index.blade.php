@@ -10,6 +10,8 @@
                     <th>No</th>
                     <th>Nama Mobil</th>
                     <th>Harga Sewa</th>
+                    <th>Dirental Pada</th>
+                    <th>Berakhir Pada</th>
                     <th>Status</th>
                     <th>Aksi</th>
                 </tr>
@@ -18,11 +20,13 @@
                 @foreach ($cars as $car)
                     <tr>
                         <td>{{ $loop->iteration }}</td>
-                        <td>{{ $car->name }}</td>
-                        <td>{{ $car->rental_price }}</td>
+                        <td>{{ $car->car->name }}</td>
+                        <td>{{ $car->total_price }}</td>
+                        <td>{{ $car->rented_at }}</td>
+                        <td>{{ $car->due_date }}</td>
                         <td>{{ $car->status }}</td>
                         <td>
-                            <a href="{{ route('rent.show', $car->id) }}" class="btn btn-info">Detail</a>
+                            {{-- <a href="{{ route('rent.show', $car->id) }}" class="btn btn-info">Detail</a> --}}
                             <a href="{{ route('rent.edit', $car->id) }}" class="btn btn-warning">Edit</a>
                             <form action="{{ route('rent.destroy', $car->id) }}" method="POST" style="display:inline;">
                                 @csrf

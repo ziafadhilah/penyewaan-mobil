@@ -42,4 +42,7 @@ Route::prefix('/rent')->name('rent.')->group(function () {
     Route::get('/', [RentalController::class, 'index'])->name('index');
     Route::get('/create', [RentalController::class, 'create'])->name('create');
     Route::post('/', [RentalController::class, 'store'])->name('store');
+    Route::get('/edit/{id}', [RentalController::class, 'edit'])->name('edit');
+    Route::put('/{id}', [RentalController::class, 'update'])->name('update');
+    Route::delete('/{id}', [RentalController::class, 'destroy'])->name('destroy');
 });
