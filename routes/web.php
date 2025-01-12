@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ReturnedController;
+use App\Http\Controllers\RentalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -34,4 +35,11 @@ Route::prefix('/returned')->name('returned.')->group(function () {
     Route::get('/', [ReturnedController::class, 'index'])->name('index');
     Route::get('/create', [ReturnedController::class, 'create'])->name('create');
     Route::post('/', [ReturnedController::class, 'store'])->name('store');
+});
+
+// Rent
+Route::prefix('/rent')->name('rent.')->group(function () {
+    Route::get('/', [RentalController::class, 'index'])->name('index');
+    Route::get('/create', [RentalController::class, 'create'])->name('create');
+    Route::post('/', [RentalController::class, 'store'])->name('store');
 });
