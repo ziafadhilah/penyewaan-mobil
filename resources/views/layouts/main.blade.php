@@ -52,12 +52,11 @@
                             </a>
                         </li>
                         <li class="nav-item mb-2">
-                            @if (Auth::user()->role === 'admin')
-                                <a href="{{ url('category') }}" class="nav-link align-middle px-0">
-                                    <i class="fs-4 fas fa-list"></i> <span
-                                        class="ms-1 d-none d-sm-inline">Kategori</span>
-                                </a>
-                            @endif
+                            {{-- @if (Auth::user()->role === 'admin') --}}
+                            <a href="{{ url('category') }}" class="nav-link align-middle px-0">
+                                <i class="fs-4 fas fa-list"></i> <span class="ms-1 d-none d-sm-inline">Kategori</span>
+                            </a>
+                            {{-- @endif --}}
                         </li>
                         <li class="nav-item mb-2">
                             <a href="{{ url('cars') }}" class="nav-link align-middle px-0">

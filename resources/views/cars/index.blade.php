@@ -43,9 +43,9 @@
         </form>
 
         <div class="mb-3">
-            @if (Auth::user()->role === 'admin')
-                <a href="{{ route('cars.create') }}" class="btn btn-success">Tambah Mobil</a>
-            @endif
+            {{-- @if (Auth::user()->role === 'admin') --}}
+            <a href="{{ route('cars.create') }}" class="btn btn-success">Tambah Mobil</a>
+            {{-- @endif --}}
             <a href="{{ route('rent.create') }}" class="btn btn-primary">Rental Mobil</a>
         </div>
 
